@@ -38,14 +38,19 @@ body {
 }
 
 /* Fade animation for welcome screen */
-@keyframes fade-in-out {
-  0%,
-  100% {
+@keyframes fade-in {
+  from {
     opacity: 0;
+    transform: translateY(10px);
   }
-  50% {
+  to {
     opacity: 1;
+    transform: translateY(0);
   }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out forwards;
 }
 
 .animate-fade-in-out {

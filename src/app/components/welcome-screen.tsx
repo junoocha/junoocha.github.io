@@ -17,10 +17,11 @@ export default function WelcomeScreen({ onFinish }: WelcomeScreenProps) {
 
     // Logo animation
     animate(rootRef.current.querySelector(".welcome-logo"), {
-      translateY: [-40, 0],
+      translateY: [-60, 0],
       opacity: [0, 1],
-      scale: [0.8, 1],
-      duration: 1200,
+      scale: [0.7, 1],
+      duration: 1300,
+      delay: 600,
       easing: "easeOutExpo",
     });
 
@@ -49,17 +50,19 @@ export default function WelcomeScreen({ onFinish }: WelcomeScreenProps) {
         fadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
-      <Image
-        src="/next.svg"
-        alt="Next.js logo"
-        width={180}
-        height={38}
-        className="welcome-logo drop-shadow-glowLg"
-        priority
-      />
-      <h1 className="welcome-text text-4xl sm:text-6xl font-bold text-accent">
-        Welcome
-      </h1>
+      <div className="flex items-center gap-3">
+        <p className="welcome-text text-4xl sm:text-6xl font-bold text-accent">
+          Powered by
+        </p>
+        <Image
+          src="/animejslogo.png"
+          alt="anime.js logo"
+          width={180}
+          height={50}
+          className="welcome-logo drop-shadow-glowLg"
+          priority
+        />
+      </div>
     </div>
   );
 }
