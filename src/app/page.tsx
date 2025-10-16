@@ -3,19 +3,29 @@
 import { useState } from "react";
 import WelcomeScreen from "./components/welcome-screen";
 import WhoAmI from "./components/who-am-i";
+import ProfessionalExperience from "./components/professional-experience";
 
 export default function MainPage() {
   const [welcomeDone, setWelcomeDone] = useState(false);
 
   return (
-    <main className="relative min-h-screen bg-bg text-fg overflow-hidden">
+    <main className="h-screen w-screen flex flex-col overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-bg text-fg">
       {!welcomeDone && <WelcomeScreen onFinish={() => setWelcomeDone(true)} />}
+
       <div
-        className={`transition-opacity duration-1000 ${
-          welcomeDone ? "opacity-100" : "opacity-0"
+        className={`flex flex-col transition-opacity duration-1000 ${
+          welcomeDone ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <WhoAmI />
+        <section className="h-screen flex items-center justify-center snap-center">
+          <WhoAmI />
+        </section>
+
+        <section className="h-screen flex items-center justify-center snap-center">
+          <ProfessionalExperience />
+        </section>
+
+        {/* Add more sections here */}
       </div>
     </main>
   );
