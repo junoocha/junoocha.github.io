@@ -1,0 +1,65 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
+import { animate } from "animejs";
+
+interface WelcomeScreenProps {
+  onFinish: () => void;
+}
+
+export default function WelcomeScreen({ onFinish }: WelcomeScreenProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+  const [fadingOut, setFadingOut] = useState(false);
+
+  useEffect(() => {
+    if (!rootRef.current) return;
+
+    // Logo animation
+    animate(rootRef.current.querySelector(".welcome-logo"), {
+      translateY: [-40, 0],
+      opacity: [0, 1],
+      scale: [0.8, 1],
+      duration: 1200,
+      easing: "easeOutExpo",
+    });
+
+    // Text animation
+    animate(rootRef.current.querySelector(".welcome-text"), {
+      translateY: [20, 0],
+      opacity: [0, 1],
+      duration: 1200,
+      delay: 400,
+      easing: "easeOutBack",
+    });
+
+    // After 3 seconds, start fading out
+    const timeout = setTimeout(() => {
+      setFadingOut(true);
+      setTimeout(onFinish, 1000); // matches the fade duration
+    }, 3000);
+
+    return () => clearTimeout(timeout);
+  }, [onFinish]);
+
+  return (
+    <div
+      ref={rootRef}
+      className={`absolute inset-0 flex flex-col items-center justify-center gap-6 bg-bg z-50 transition-opacity duration-1000 ${
+        fadingOut ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}
+    >
+      <Image
+        src="/next.svg"
+        alt="Next.js logo"
+        width={180}
+        height={38}
+        className="welcome-logo drop-shadow-glowLg"
+        priority
+      />
+      <h1 className="welcome-text text-4xl sm:text-6xl font-bold text-accent">
+        Welcome
+      </h1>
+    </div>
+  );
+}

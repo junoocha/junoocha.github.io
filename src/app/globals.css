@@ -1,26 +1,53 @@
+/* src/app/globals.css */
+
+/* Tailwind base reset */
 @import "tailwindcss";
 
+/* --- Your custom theme colors --- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #1f1f1f; /* main background */
+  --foreground: #ededed; /* default text */
+  --accent: #1f1f1f; /* accent color for links/buttons */
+  --card-bg: #111111;
+  --card-hover: #1a1a1a;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Body styling */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Hover effect */
+.hover-glow:hover {
+  box-shadow: 0 0 10px var(--accent);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 16px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--accent);
+  border-radius: 4px;
+  border: 2px solid var(--background);
+}
+
+/* Fade animation for welcome screen */
+@keyframes fade-in-out {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 2.5s ease-in-out forwards;
 }
