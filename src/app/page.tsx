@@ -4,6 +4,7 @@ import { useState } from "react";
 import WelcomeScreen from "./components/welcome-screen";
 import WhoAmI from "./components/who-am-i";
 import ProfessionalExperience from "./components/professional-experience";
+import PersonalProjects from "./components/personal-projects";
 
 export default function MainPage() {
   const [welcomeDone, setWelcomeDone] = useState(false);
@@ -23,6 +24,10 @@ export default function MainPage() {
 
         <section className="h-screen flex items-center justify-center snap-center">
           <ProfessionalExperience />
+        </section>
+
+        <section className="h-screen flex items-center justify-center snap-center">
+          <PersonalProjects />
         </section>
 
         {/* Add more sections here */}
