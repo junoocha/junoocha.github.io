@@ -147,7 +147,7 @@ export default function PersonalProjects() {
         <div className="relative flex items-center justify-center w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] overflow-visible group">
           {/* LEFT hover zone */}
           <div
-            className="absolute left-0 top-0 h-full w-[15%] bg-gradient-to-r from-black/8 to-transparent 
+            className="absolute left-0 top-0 h-full w-[15%] bg-gradient-to-r from-black/25 to-transparent 
                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                        flex items-center justify-start pl-3 cursor-pointer rounded-l-xl z-30"
             onClick={prevImage}
@@ -157,7 +157,7 @@ export default function PersonalProjects() {
 
           {/* RIGHT hover zone */}
           <div
-            className="absolute right-0 top-0 h-full w-[15%] bg-gradient-to-l from-black/3 to-transparent 
+            className="absolute right-0 top-0 h-full w-[15%] bg-gradient-to-l from-black/25 to-transparent 
                        opacity-0 group-hover:opacity-100 transition-opacity duration-300 
                        flex items-center justify-end pr-3 cursor-pointer rounded-r-xl z-30"
             onClick={nextImage}
