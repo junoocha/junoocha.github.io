@@ -13,14 +13,14 @@ interface ExperienceItem {
 const experiences: ExperienceItem[] = [
   {
     name: "UBILD",
-    logo: "/logos/ubild.png",
+    logo: "/ubild.png",
     description:
       "Full Stack Intern - React, Next.js, Supabase, TypeScript. Engineered and launched a fully functional admin panel integrated with Supabase from scratch. Developed and optimized API endpoints.",
     link: "https://ubild.com",
   },
   {
     name: "Enki",
-    logo: "/logos/enki.png",
+    logo: "/enki.jpg",
     description:
       "Course Developer - Lua, Java, Python, Git. Developed and published an entire course on Roblox Scripting and Lua. Revamped outdated curricula on Python and Java.",
     link: "https://enki.com",
