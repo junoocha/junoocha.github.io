@@ -16,9 +16,9 @@ const projects: Project[] = [
     description:
       "Manga/Manhwa Reader Platform | Next.js, React, Supabase, TypeScript.",
     images: [
-      "/projects/wormscans.png",
-      "/projects/wormscans-2.png",
-      "/projects/wormscans-3.png",
+      "/projects/worm1.jpg",
+      "/projects/worm2.jpg",
+      "/projects/worm3.gif",
     ],
     link: "https://www.wormscans.ca/",
   },
@@ -27,9 +27,9 @@ const projects: Project[] = [
     description:
       "Interactive fractal tree generator | React, Next.js, TypeScript.",
     images: [
-      "/projects/fractal-tree.png",
-      "/projects/fractal-tree-2.png",
-      "/projects/fractal-tree-3.png",
+      "/projects/tree1.jpg",
+      "/projects/tree2.jpg",
+      "/projects/tree3.gif",
     ],
     link: "https://fractal-tree-gen.vercel.app/",
   },
@@ -37,11 +37,7 @@ const projects: Project[] = [
     title: "DnD Stat Setter",
     description:
       "Tool for setting Dungeons & Dragons stats | React, Next.js, Supabase.",
-    images: [
-      "/projects/dnd-stat.png",
-      "/projects/dnd-stat-2.png",
-      "/projects/dnd-stat-3.png",
-    ],
+    images: ["/projects/dnd1.gif", "/projects/dnd1.jpg", "/projects/dnd3.gif"],
     link: "https://the-better-dnd-setter.vercel.app/",
   },
 ];
