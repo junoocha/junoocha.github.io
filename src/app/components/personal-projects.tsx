@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { animate, stagger, splitText } from "animejs";
 
 interface Project {
   title: string;
@@ -48,10 +49,18 @@ const projects: Project[] = [
 export default function PersonalProjects() {
   const [currentProject, setCurrentProject] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const descRef = useRef<HTMLParagraphElement>(null);
+  const imageRefs = useRef<HTMLDivElement[]>([]);
 
   const project = projects[currentProject];
   const totalProjects = projects.length;
   const totalImages = project.images.length;
+
+  // Reset refs when project changes
+  useEffect(() => {
+    imageRefs.current = [];
+  }, [currentProject]);
 
   const prevProject = () => {
     setCurrentProject((p) => (p - 1 + totalProjects) % totalProjects);
@@ -71,9 +80,54 @@ export default function PersonalProjects() {
     return diff;
   };
 
+  // Animate title + description on project change
+  useEffect(() => {
+    if (titleRef.current) {
+      const { chars } = splitText(titleRef.current, { chars: true });
+      chars.forEach((c) => {
+        c.style.opacity = "0";
+        c.style.transform = "translateY(-20px)";
+      });
+      animate(chars, {
+        translateY: [-20, 0],
+        opacity: [0, 1],
+        delay: stagger(50),
+        easing: "easeOutExpo",
+      });
+    }
+    if (descRef.current) {
+      const { words } = splitText(descRef.current, { words: true });
+      words.forEach((w) => {
+        w.style.opacity = "0";
+        w.style.transform = "translateY(10px)";
+      });
+      animate(words, {
+        translateY: [10, 0],
+        opacity: [0, 1],
+        delay: stagger(40),
+        easing: "easeOutCubic",
+      });
+    }
+  }, [currentProject]);
+
+  // Animate images whenever currentImage changes
+  useEffect(() => {
+    imageRefs.current.forEach((img, idx) => {
+      const offset = getOffset(idx);
+      const isCenter = offset === 0;
+      animate(img, {
+        translateX: offset * 320,
+        scale: isCenter ? 1 : 0.9,
+        opacity: isCenter ? 1 : 0.4,
+        duration: 600,
+        delay: stagger(50),
+        easing: "spring(1, 80, 10, 0)",
+      });
+    });
+  }, [currentImage, currentProject]);
+
   return (
     <section className="min-h-screen snap-center flex flex-col items-center justify-center px-6">
-      {/* Section title */}
       <h2 className="text-5xl sm:text-6xl font-bold text-accent mb-12">
         Personal Projects
       </h2>
@@ -103,32 +157,21 @@ export default function PersonalProjects() {
 
           {/* Images */}
           <div className="relative flex items-center justify-center w-full h-full">
-            {project.images.map((img, idx) => {
-              const offset = getOffset(idx);
-              const isCenter = offset === 0;
-
-              return (
-                <div
-                  key={idx}
-                  className={`absolute transition-all duration-700 ease-in-out ${
-                    isCenter
-                      ? "z-20 scale-100 opacity-100"
-                      : "z-10 scale-90 opacity-40 blur-sm"
-                  }`}
-                  style={{
-                    transform: `translateX(${offset * 320}px) scale(${
-                      isCenter ? 1 : 0.9
-                    })`,
-                  }}
-                >
-                  <img
-                    src={img}
-                    alt={`${project.title} ${idx}`}
-                    className="w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] object-cover rounded-xl shadow-2xl"
-                  />
-                </div>
-              );
-            })}
+            {project.images.map((img, idx) => (
+              <div
+                key={idx}
+                ref={(el) => {
+                  if (el) imageRefs.current[idx] = el;
+                }}
+                className="absolute carousel-image w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] object-cover rounded-xl shadow-2xl"
+              >
+                <img
+                  src={img}
+                  alt={`${project.title} ${idx}`}
+                  className="w-full h-full object-cover rounded-xl shadow-2xl"
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -153,10 +196,18 @@ export default function PersonalProjects() {
           className="cursor-pointer"
           onClick={() => window.open(project.link, "_blank")}
         >
-          <h3 className="text-4xl sm:text-5xl font-bold text-accent mb-2">
+          <h3
+            ref={titleRef}
+            className="project-title text-4xl sm:text-5xl font-bold text-accent mb-2"
+          >
             {project.title}
           </h3>
-          <p className="text-fg/90 text-lg sm:text-xl">{project.description}</p>
+          <p
+            ref={descRef}
+            className="project-desc text-fg/90 text-lg sm:text-xl"
+          >
+            {project.description}
+          </p>
         </div>
       </div>
     </section>

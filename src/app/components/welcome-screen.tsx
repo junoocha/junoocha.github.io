@@ -27,10 +27,10 @@ export default function WelcomeScreen({ onFinish }: WelcomeScreenProps) {
 
     // Text animation
     animate(rootRef.current.querySelector(".welcome-text"), {
-      translateY: [20, 0],
+      translateY: [50, 0],
       opacity: [0, 1],
       duration: 1200,
-      delay: 400,
+      delay: 500,
       easing: "easeOutBack",
     });
 
@@ -51,14 +51,14 @@ export default function WelcomeScreen({ onFinish }: WelcomeScreenProps) {
       }`}
     >
       <div className="flex items-center gap-3">
-        <p className="welcome-text text-4xl sm:text-6xl font-bold text-accent">
+        <p className="welcome-text mb-1 italic text-4xl sm:text-6xl font-bold text-accent">
           Powered by
         </p>
         <Image
           src="/animejslogo.png"
           alt="anime.js logo"
-          width={180}
-          height={50}
+          width={300}
+          height={90}
           className="welcome-logo drop-shadow-glowLg"
           priority
         />
