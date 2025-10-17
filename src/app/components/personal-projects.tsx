@@ -16,7 +16,7 @@ const projects: Project[] = [
     description:
       "Manga/Manhwa Reader Platform | Next.js, React, Supabase, TypeScript.",
     images: [
-      "/projects/worm1.jpg",
+      "/projects/worm1.png",
       "/projects/worm2.jpg",
       "/projects/worm3.gif",
     ],
