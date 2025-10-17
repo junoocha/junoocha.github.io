@@ -109,14 +109,28 @@ export default function PersonalProjects() {
   // Animate images whenever currentImage changes
   useEffect(() => {
     imageRefs.current.forEach((img, idx) => {
+      if (!img) return;
       const offset = getOffset(idx);
       const isCenter = offset === 0;
+
+      // Calculate visual properties
+      const translateX = offset * 320;
+      const scale = isCenter ? 1 : 0.9;
+      const opacity = isCenter ? 1 : Math.max(0.3, 1 - Math.abs(offset) * 0.3);
+      const blur = isCenter ? "0px" : `${Math.abs(offset) * 3}px`;
+      const zIndex = isCenter ? 20 : 10 - Math.abs(offset); // centered image always on top
+
+      // Apply non-animated props before animating (zIndex, pointer)
+      img.style.zIndex = `${zIndex}`;
+      img.style.pointerEvents = isCenter ? "auto" : "none";
+
+      // Animate transforms and visuals
       animate(img, {
-        translateX: offset * 320,
-        scale: isCenter ? 1 : 0.9,
-        opacity: isCenter ? 1 : 0.4,
-        duration: 600,
-        delay: stagger(50),
+        translateX,
+        scale,
+        opacity,
+        filter: `blur(${Math.abs(offset) * 3}px)`,
+        duration: 700,
         easing: "spring(1, 80, 10, 0)",
       });
     });
