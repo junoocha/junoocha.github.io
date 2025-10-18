@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
-    "start": "next start",
-    "deploy": "gh-pages -d out"
+    "start": "next start"
   },
   "dependencies": {
     "animejs": "^4.2.2",

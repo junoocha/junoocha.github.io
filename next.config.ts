@@ -1,9 +1,13 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "export", // enables static export
-  basePath: "",
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**", // allows images from any domain
+      },
+    ],
   },
 };
 
