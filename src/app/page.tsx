@@ -5,12 +5,14 @@ import WelcomeScreen from "./components/welcome-screen";
 import WhoAmI from "./components/who-am-i";
 import ProfessionalExperience from "./components/professional-experience";
 import PersonalProjects from "./components/personal-projects";
+import TechParticles from "./components/tech-particles";
 
 export default function MainPage() {
   const [welcomeDone, setWelcomeDone] = useState(false);
 
   return (
     <main className="h-screen w-screen flex flex-col overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-bg text-fg">
+      <TechParticles />
       {!welcomeDone && <WelcomeScreen onFinish={() => setWelcomeDone(true)} />}
 
       <div
