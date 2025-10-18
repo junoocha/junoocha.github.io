@@ -223,22 +223,26 @@ export default function PersonalProjects() {
         </div>
       </div>
 
-      {/* TITLE + DESCRIPTION */}
-      <div className="relative w-full max-w-5xl flex flex-col items-center justify-center text-center mt-2">
+      {/* PROJECT SWITCH BUTTONS */}
+      <div className="flex justify-center gap-4 sm:gap-6 mt-4">
         <button
           onClick={prevProject}
-          className="absolute left-[-100px] top-1/2 -translate-y-1/2 z-30 p-4 bg-bg/50 rounded-full opacity-80 hover:opacity-100 transition text-2xl"
+          className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-bg/50 text-accent font-semibold 
+               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300"
         >
-          &#9664;
+          Prev Project
         </button>
-
         <button
           onClick={nextProject}
-          className="absolute right-[-100px] top-1/2 -translate-y-1/2 z-30 p-4 bg-bg/50 rounded-full opacity-80 hover:opacity-100 transition text-2xl"
+          className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-bg/50 text-accent font-semibold 
+               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300"
         >
-          &#9654;
+          Next Project
         </button>
+      </div>
 
+      {/* TITLE + DESCRIPTION */}
+      <div className="relative w-full max-w-5xl flex flex-col items-center justify-center text-center mt-2">
         <div
           className="cursor-pointer"
           onClick={() => window.open(project.link, "_blank")}

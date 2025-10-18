@@ -159,18 +159,17 @@ export default function ProfessionalExperience() {
   }, [cardRefs.current]);
 
   return (
-    <section className="min-h-screen snap-center flex flex-col items-center justify-center px-6">
+    <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-8">
       <h2
         ref={h2Ref}
-        className="text-5xl sm:text-6xl font-bold text-accent mb-6"
+        className="text-4xl sm:text-5xl font-bold text-accent mb-6"
       >
         Professional Experience
       </h2>
 
       <div
         ref={containerRef}
-        className="w-full max-w-4xl p-4 space-y-6"
-        style={{ minHeight: "400px" }}
+        className="w-full max-w-full sm:max-w-4xl p-2 sm:p-4 space-y-4 sm:space-y-6"
       >
         {experiences.map((exp, index) => (
           <div
@@ -178,9 +177,9 @@ export default function ProfessionalExperience() {
             ref={(el) => {
               if (el) cardRefs.current[index] = el;
             }}
-            className="exp-item flex items-start gap-4 p-4 bg-card rounded-lg shadow-md"
+            className="exp-item flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-card rounded-lg shadow-md"
           >
-            <div className="w-24 h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
+            <div className="w-16 h-16 sm:w-24 sm:h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
               <img
                 src={exp.logo}
                 alt={`${exp.name} logo`}
@@ -188,8 +187,12 @@ export default function ProfessionalExperience() {
               />
             </div>
             <div className="flex-1">
-              <h3 className="text-2xl font-semibold text-accent">{exp.name}</h3>
-              <p className="text-fg/90 mt-2">{exp.description}</p>
+              <h3 className="text-xl sm:text-2xl font-semibold text-accent mb-1 sm:mb-2">
+                {exp.name}
+              </h3>
+              <p className="text-sm sm:text-base text-fg/90">
+                {exp.description}
+              </p>
             </div>
           </div>
         ))}

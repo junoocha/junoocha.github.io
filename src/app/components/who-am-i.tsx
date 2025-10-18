@@ -80,21 +80,21 @@ export default function WhoAmI() {
   }, []);
 
   return (
-    <section className="min-h-screen animate-fade-in flex flex-col items-center justify-center text-center px-6">
+    <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-12 py-8">
       <h2
         ref={titleRef}
-        className="text-5xl sm:text-6xl font-bold text-accent mb-6"
+        className="text-4xl sm:text-6xl font-bold text-accent mb-6"
       >
         Hey Hey!
       </h2>
 
       <p
         ref={textRef}
-        className="text-lg sm:text-xl text-fg/90 max-w-2xl leading-relaxed mb-8"
+        className="text-base sm:text-lg text-fg/90 max-w-xl sm:max-w-2xl leading-relaxed mb-8 sm:mb-12"
       >
         I’m Caleb! A recent Computer Science grad from Western who’s worked on a
         variety of full-stack projects. I enjoy building things that work (most
-        of the time), spark a litte joy and creativity, and occasionally even
+        of the time), spark a little joy and creativity, and occasionally even
         impress my cats.
         <br />
         <br />
@@ -103,12 +103,12 @@ export default function WhoAmI() {
         my two cats that I’m the boss. (Spoiler: I’m not.)
       </p>
 
-      <div className="flex flex-wrap justify-center gap-5">
+      <div className="flex flex-wrap justify-center gap-4 sm:gap-5">
         <a
           href="https://github.com/junoocha"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
+          className="px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
         >
           GitHub
         </a>
@@ -116,7 +116,7 @@ export default function WhoAmI() {
           href="https://www.linkedin.com/in/caleb-cha-826681299/"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
+          className="px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
         >
           LinkedIn
         </a>
@@ -124,7 +124,7 @@ export default function WhoAmI() {
           href="/resume.pdf"
           target="_blank"
           rel="noopener noreferrer"
-          className="px-6 py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
+          className="px-4 sm:px-6 py-2 sm:py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
         >
           Resume
         </a>
