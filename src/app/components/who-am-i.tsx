@@ -113,7 +113,7 @@ export default function WhoAmI() {
           GitHub
         </a>
         <a
-          href="https://linkedin.com/in/junoocha"
+          href="https://www.linkedin.com/in/caleb-cha-826681299/"
           target="_blank"
           rel="noopener noreferrer"
           className="px-6 py-3 rounded-full font-semibold bg-accent text-bg transition-transform duration-300 hover:-translate-y-1"
