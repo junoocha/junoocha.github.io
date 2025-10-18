@@ -13,8 +13,11 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Caleb Cha Portfolio",
-  description: "Full-stack developer portfolio",
+  title: "Caleb Cha | Portfolio",
+  description: "Caleb Cha",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
