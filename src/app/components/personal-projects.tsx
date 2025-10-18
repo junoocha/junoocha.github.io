@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, stagger, splitText } from "animejs";
+import { createTimeline, animate, stagger, splitText } from "animejs";
 
 interface Project {
   title: string;
@@ -48,10 +48,42 @@ export default function PersonalProjects() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const imageRefs = useRef<HTMLDivElement[]>([]);
+  const h2Ref = useRef<HTMLHeadingElement>(null);
 
   const project = projects[currentProject];
   const totalProjects = projects.length;
   const totalImages = project.images.length;
+
+  useEffect(() => {
+    if (!h2Ref.current) return;
+
+    // Split H2 into characters with clip + bottom clone
+    const { chars } = splitText(h2Ref.current, {
+      chars: { wrap: "clip", clone: "bottom" },
+    });
+
+    // Make sure chars are inline
+    chars.forEach((c) => {
+      c.style.display = "inline-block";
+    });
+
+    // Timeline for continuous looping
+    const tl = createTimeline();
+
+    tl.add(
+      chars,
+      {
+        y: "-100%", // move each char up
+        duration: 2000, // speed of each char
+        easing: "inOut(2)",
+        loop: true, // infinite loop
+        loopDelay: 0, // no pause between loops
+      },
+      stagger(200, { from: "center" }) // wave effect
+    );
+
+    tl.init();
+  }, []);
 
   // Reset refs when project changes
   useEffect(() => {
@@ -138,9 +170,14 @@ export default function PersonalProjects() {
 
   return (
     <section className="min-h-screen snap-center flex flex-col items-center justify-center px-6">
-      <h2 className="text-5xl sm:text-6xl font-bold text-accent mb-12">
-        Personal Projects
-      </h2>
+      <div className="relative h-24 overflow-hidden mb-12 flex items-center justify-center">
+        <h2
+          ref={h2Ref}
+          className="text-5xl sm:text-6xl font-bold text-accent inline-block"
+        >
+          Personal Projects
+        </h2>
+      </div>
 
       {/* IMAGE CAROUSEL */}
       <div className="relative flex flex-col items-center justify-center w-full max-w-6xl mb-8">

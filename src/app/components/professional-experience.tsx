@@ -30,7 +30,41 @@ const experiences: ExperienceItem[] = [
 export default function ProfessionalExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<HTMLDivElement[]>([]);
+  const h2Ref = useRef<HTMLHeadingElement>(null);
 
+  // Subtle continuous wave animation for H2
+  useEffect(() => {
+    if (!h2Ref.current) return;
+
+    const letters = h2Ref.current.textContent!.split("");
+    h2Ref.current.innerHTML = letters
+      .map((l) => {
+        if (l === " ")
+          return `<span style="display:inline-block">&nbsp;</span>`;
+        return `<span style="display:inline-block">${l}</span>`;
+      })
+      .join("");
+
+    const chars = h2Ref.current.querySelectorAll("span");
+
+    chars.forEach((el, i) => {
+      el.animate(
+        [
+          { transform: "scale(1) rotate(-2deg)", opacity: 0.8 },
+          { transform: "scale(1.15) rotate(2deg)", opacity: 1 },
+        ],
+        {
+          duration: 800,
+          iterations: Infinity,
+          direction: "alternate",
+          easing: "ease-in-out",
+          delay: i * 60, // like stagger
+        }
+      );
+    });
+  }, []);
+
+  // Animate cards on scroll
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -38,16 +72,54 @@ export default function ProfessionalExperience() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            // Animate all cards in stagger
-            animate(cardRefs.current, {
-              translateY: [100, -20, 0], // start far down, overshoot up, settle at 0
-              scale: [0.8, 1.1, 1], // start small, pop slightly larger, settle at 1
-              rotate: [-10, 5, 0], // slight rotation wiggle
-              opacity: [0, 1],
-              delay: stagger(150),
-              duration: 900,
-              easing: "spring(1, 80, 15, 0)", // stronger spring effect
+            cardRefs.current.forEach((card, i) => {
+              animate(card, {
+                translateY: [50, 0],
+                scale: [0.9, 1],
+                opacity: [0, 1],
+                delay: stagger(150 * i),
+                duration: 700,
+                easing: "easeOutCubic",
+              });
+
+              // Animate title letters
+              const titleEl = card.querySelector("h3");
+              if (titleEl) {
+                const letters = titleEl.textContent!.split("");
+                titleEl.innerHTML = letters
+                  .map(
+                    (l) => `<span class="inline-block opacity-0">${l}</span>`
+                  )
+                  .join("");
+                animate(titleEl.querySelectorAll("span"), {
+                  translateY: [-10, 0],
+                  opacity: [0, 1],
+                  delay: stagger(30),
+                  easing: "easeOutCubic",
+                  duration: 400,
+                });
+              }
+
+              // Animate description words
+              const descEl = card.querySelector("p");
+              if (descEl) {
+                const words = descEl.textContent!.split(" ");
+                descEl.innerHTML = words
+                  .map(
+                    (w) =>
+                      `<span class="inline-block opacity-0 mr-1">${w}</span>`
+                  )
+                  .join(" ");
+                animate(descEl.querySelectorAll("span"), {
+                  translateY: [5, 0],
+                  opacity: [0, 1],
+                  delay: stagger(20),
+                  easing: "easeOutCubic",
+                  duration: 400,
+                });
+              }
             });
+
             observer.unobserve(entry.target);
           }
         });
@@ -58,30 +130,24 @@ export default function ProfessionalExperience() {
     observer.observe(containerRef.current);
   }, []);
 
+  // Card hover animation
   useEffect(() => {
     cardRefs.current.forEach((card) => {
       if (!card) return;
-
-      // Mouse enter: pop + rotate slightly
-      const handleMouseEnter = () => {
+      const handleMouseEnter = () =>
         animate(card, {
           scale: 1.03,
           rotate: 1,
-          duration: 600,
-          easing: "easeOutElastic(1, .9)", // springy feel
-        });
-      };
-
-      // Mouse leave: return to normal
-      const handleMouseLeave = () => {
-        animate(card, {
-          scale: 1,
-          rotate: 0,
           duration: 400,
           easing: "easeOutCubic",
         });
-      };
-
+      const handleMouseLeave = () =>
+        animate(card, {
+          scale: 1,
+          rotate: 0,
+          duration: 300,
+          easing: "easeOutCubic",
+        });
       card.addEventListener("mouseenter", handleMouseEnter);
       card.addEventListener("mouseleave", handleMouseLeave);
 
@@ -92,25 +158,12 @@ export default function ProfessionalExperience() {
     });
   }, [cardRefs.current]);
 
-  useEffect(() => {
-    cardRefs.current.forEach((card, i) => {
-      if (!card) return;
-
-      // Floating animation
-      animate(card, {
-        translateY: [0, 6 + Math.random() * 4], // float 6-10px randomly
-        rotate: [0, 1 + Math.random() * 2], // rotate 1-3 degrees
-        duration: 1800 + Math.random() * 800,
-        direction: "alternate",
-        loop: true,
-        easing: "easeInOutSine", // smooth, gentle oscillation
-      });
-    });
-  }, []);
-
   return (
     <section className="min-h-screen snap-center flex flex-col items-center justify-center px-6">
-      <h2 className="text-5xl sm:text-6xl font-bold text-accent mb-6">
+      <h2
+        ref={h2Ref}
+        className="text-5xl sm:text-6xl font-bold text-accent mb-6"
+      >
         Professional Experience
       </h2>
 
@@ -125,7 +178,7 @@ export default function ProfessionalExperience() {
             ref={(el) => {
               if (el) cardRefs.current[index] = el;
             }}
-            className="exp-item flex items-start gap-4 p-4 bg-card rounded-lg shadow-md "
+            className="exp-item flex items-start gap-4 p-4 bg-card rounded-lg shadow-md"
           >
             <div className="w-24 h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
               <img
