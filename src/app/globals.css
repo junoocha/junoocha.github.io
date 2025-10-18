@@ -8,8 +8,8 @@
   --background: #1f1f1f; /* main background */
   --foreground: #ededed; /* default text */
   --accent: #1f1f1f; /* accent color for links/buttons */
-  --card-bg: #111111;
-  --card-hover: #1a1a1a;
+  --card-bg: #292828;
+  --card-hover: #970000;
 }
 
 /* Body styling */
@@ -35,6 +35,10 @@ body {
   background-color: var(--accent);
   border-radius: 4px;
   border: 2px solid var(--background);
+}
+
+.bg-card {
+  background-color: var(--card-bg);
 }
 
 /* Fade animation for welcome screen */

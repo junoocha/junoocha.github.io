@@ -15,14 +15,14 @@ const experiences: ExperienceItem[] = [
     name: "UBILD",
     logo: "/ubild.png",
     description:
-      "Full Stack Intern - React, Next.js, Supabase, TypeScript. Engineered and launched a fully functional admin panel integrated with Supabase from scratch. Developed and optimized API endpoints.",
+      "At UBILD (Jul – Dec 2024), I worked as a Full Stack Intern with React, Next.js, Supabase, and TypeScript. I built a full-featured admin panel from scratch that displayed all user data, included links to profiles in admin view, showcased available jobs (allowing admins to add users to them), and tracked progress through job certifications. On top of that, I optimized API endpoints, refined profile upload and display for a smoother UX, and integrated Playwright tests into our CI pipeline to ensure login flows stayed rock-solid across GitHub merges.",
     link: "https://ubild.com",
   },
   {
     name: "Enki",
     logo: "/enki.jpg",
     description:
-      "Course Developer - Lua, Java, Python, Git. Developed and published an entire course on Roblox Scripting and Lua. Revamped outdated curricula on Python and Java.",
+      "At Enki (Aug 2023 – Jul 2024), I developed and published a full course on Roblox Scripting with Lua. I also revamped the Python and Java curricula, updating outdated beginner lessons to improve clarity and engagement. Throughout my time at Enki, I collaborated closely with senior developers via Git to streamline content and maintain proper version control.",
     link: "https://enki.com",
   },
 ];
@@ -125,7 +125,7 @@ export default function ProfessionalExperience() {
             ref={(el) => {
               if (el) cardRefs.current[index] = el;
             }}
-            className="exp-item flex items-start gap-4 p-4 bg-card-bg rounded-lg shadow-md "
+            className="exp-item flex items-start gap-4 p-4 bg-card rounded-lg shadow-md "
           >
             <div className="w-24 h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
               <img
