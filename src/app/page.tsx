@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import WelcomeScreen from "./components/welcome-screen";
 import WhoAmI from "./components/who-am-i";
 import ProfessionalExperience from "./components/professional-experience";
@@ -9,10 +9,18 @@ import TechParticles from "./components/tech-particles";
 
 export default function MainPage() {
   const [welcomeDone, setWelcomeDone] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   return (
     <main className="h-screen w-screen flex flex-col overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-bg text-fg">
-      <TechParticles />
+      {!isMobile && <TechParticles />}
       {!welcomeDone && <WelcomeScreen onFinish={() => setWelcomeDone(true)} />}
 
       <div
