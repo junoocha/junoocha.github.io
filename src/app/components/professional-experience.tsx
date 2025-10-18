@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { animate, stagger } from "animejs";
 
 interface ExperienceItem {
   name: string;
-  logo: string; // path to logo
+  logo: string;
   description: string;
   link: string;
 }
@@ -31,6 +31,15 @@ export default function ProfessionalExperience() {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<HTMLDivElement[]>([]);
   const h2Ref = useRef<HTMLHeadingElement>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   // Subtle continuous wave animation for H2
   useEffect(() => {
@@ -58,7 +67,7 @@ export default function ProfessionalExperience() {
           iterations: Infinity,
           direction: "alternate",
           easing: "ease-in-out",
-          delay: i * 60, // like stagger
+          delay: i * 60,
         }
       );
     });
@@ -124,7 +133,7 @@ export default function ProfessionalExperience() {
           }
         });
       },
-      { threshold: 0.5 }
+      { threshold: 0.3 }
     );
 
     observer.observe(containerRef.current);
@@ -159,17 +168,28 @@ export default function ProfessionalExperience() {
   }, [cardRefs.current]);
 
   return (
-    <section className="min-h-screen flex flex-col items-center justify-center px-4 sm:px-6 py-8">
-      <h2
-        ref={h2Ref}
-        className="text-4xl sm:text-5xl font-bold text-accent mb-6"
-      >
-        Professional Experience
-      </h2>
+    <section className="min-h-screen flex flex-col items-center justify-center px-3 sm:px-6 py-12 sm:py-8">
+      {isMobile ? (
+        <div className="text-center">
+          <h2 ref={h2Ref} className="text-3xl font-bold text-accent mb-2">
+            Professional
+          </h2>
+          <h2 ref={h2Ref} className="text-3xl font-bold text-accent mb-4">
+            Experience
+          </h2>
+        </div>
+      ) : (
+        <h2
+          ref={h2Ref}
+          className="text-5xl font-bold text-accent mb-6 text-center"
+        >
+          Professional Experience
+        </h2>
+      )}
 
       <div
         ref={containerRef}
-        className="w-full max-w-full sm:max-w-4xl p-2 sm:p-4 space-y-4 sm:space-y-6"
+        className="w-full max-w-full sm:max-w-4xl px-2 sm:px-4 space-y-3 sm:space-y-6"
       >
         {experiences.map((exp, index) => (
           <div
@@ -177,20 +197,20 @@ export default function ProfessionalExperience() {
             ref={(el) => {
               if (el) cardRefs.current[index] = el;
             }}
-            className="exp-item flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-4 sm:p-6 bg-card rounded-lg shadow-md"
+            className="exp-item flex flex-col sm:flex-row items-start gap-3 sm:gap-4 p-3 sm:p-6 bg-card rounded-lg shadow-md"
           >
-            <div className="w-16 h-16 sm:w-24 sm:h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
+            <div className="w-14 h-14 sm:w-20 sm:h-20 md:w-24 md:h-24 flex-shrink-0 bg-gray-200 rounded-md flex items-center justify-center">
               <img
                 src={exp.logo}
                 alt={`${exp.name} logo`}
-                className="max-w-full max-h-full"
+                className="max-w-full max-h-full object-contain"
               />
             </div>
-            <div className="flex-1">
-              <h3 className="text-xl sm:text-2xl font-semibold text-accent mb-1 sm:mb-2">
+            <div className="flex-1 min-w-0">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-semibold text-accent mb-1 sm:mb-2">
                 {exp.name}
               </h3>
-              <p className="text-sm sm:text-base text-fg/90">
+              <p className="text-xs sm:text-sm md:text-base text-fg/90 leading-relaxed">
                 {exp.description}
               </p>
             </div>

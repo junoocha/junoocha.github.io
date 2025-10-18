@@ -16,9 +16,9 @@ const projects: Project[] = [
     description:
       "Manga/Manhwa Reader/Scraper Platform | React, Next.js, Supabase, TypeScript.",
     images: [
+      "/projects/worm3.gif",
       "/projects/worm1.png",
       "/projects/worm2.jpg",
-      "/projects/worm3.gif",
     ],
     link: "https://www.wormscans.ca/",
   },
@@ -27,9 +27,9 @@ const projects: Project[] = [
     description:
       "Interactive fractal tree generator | React, Next.js, TypeScript.",
     images: [
+      "/projects/tree3.gif",
       "/projects/tree1.jpg",
       "/projects/tree2.jpg",
-      "/projects/tree3.gif",
     ],
     link: "https://fractal-tree-gen.vercel.app/",
   },
@@ -45,6 +45,7 @@ const projects: Project[] = [
 export default function PersonalProjects() {
   const [currentProject, setCurrentProject] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const imageRefs = useRef<HTMLDivElement[]>([]);
@@ -53,6 +54,14 @@ export default function PersonalProjects() {
   const project = projects[currentProject];
   const totalProjects = projects.length;
   const totalImages = project.images.length;
+
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     if (!h2Ref.current) return;
@@ -73,13 +82,13 @@ export default function PersonalProjects() {
     tl.add(
       chars,
       {
-        y: "-100%", // move each char up
-        duration: 2000, // speed of each char
+        y: "-100%",
+        duration: 2000,
         easing: "inOut(2)",
-        loop: true, // infinite loop
-        loopDelay: 0, // no pause between loops
+        loop: true,
+        loopDelay: 0,
       },
-      stagger(200, { from: "center" }) // wave effect
+      stagger(200, { from: "center" })
     );
 
     tl.init();
@@ -138,25 +147,23 @@ export default function PersonalProjects() {
     }
   }, [currentProject]);
 
-  // Animate images whenever currentImage changes
+  // Animate images whenever currentImage changes (desktop only)
   useEffect(() => {
+    if (isMobile) return;
+
     imageRefs.current.forEach((img, idx) => {
       if (!img) return;
       const offset = getOffset(idx);
       const isCenter = offset === 0;
 
-      // Calculate visual properties
       const translateX = offset * 320;
       const scale = isCenter ? 1 : 0.9;
       const opacity = isCenter ? 1 : Math.max(0.3, 1 - Math.abs(offset) * 0.3);
-      const blur = isCenter ? "0px" : `${Math.abs(offset) * 3}px`;
-      const zIndex = isCenter ? 20 : 10 - Math.abs(offset); // centered image always on top
+      const zIndex = isCenter ? 20 : 10 - Math.abs(offset);
 
-      // Apply non-animated props before animating (zIndex, pointer)
       img.style.zIndex = `${zIndex}`;
       img.style.pointerEvents = isCenter ? "auto" : "none";
 
-      // Animate transforms and visuals
       animate(img, {
         translateX,
         scale,
@@ -166,96 +173,128 @@ export default function PersonalProjects() {
         easing: "spring(1, 80, 10, 0)",
       });
     });
-  }, [currentImage, currentProject]);
+  }, [currentImage, currentProject, isMobile]);
 
   return (
-    <section className="min-h-screen snap-center flex flex-col items-center justify-center px-6">
-      <div className="relative h-24 overflow-hidden mb-12 flex items-center justify-center">
+    <section className="min-h-screen snap-center flex flex-col items-center justify-center px-3 sm:px-6 py-12 sm:py-8">
+      <div className="relative h-16 sm:h-20 md:h-24 overflow-hidden mb-6 sm:mb-8 md:mb-12 flex items-center justify-center">
         <h2
           ref={h2Ref}
-          className="text-5xl sm:text-6xl font-bold text-accent inline-block"
+          className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-accent inline-block px-2 text-center"
         >
           Personal Projects
         </h2>
       </div>
 
-      {/* IMAGE CAROUSEL */}
-      <div className="relative flex flex-col items-center justify-center w-full max-w-6xl mb-8">
-        <div className="relative flex items-center justify-center w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] overflow-visible group">
-          {/* LEFT hover zone */}
-          <div
-            className="absolute left-0 top-0 h-full w-[15%] bg-gradient-to-r from-black/25 to-transparent 
-                       opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-                       flex items-center justify-start pl-3 cursor-pointer rounded-l-xl z-30"
-            onClick={prevImage}
-          >
-            <span className="text-5xl text-white drop-shadow-lg">&#9664;</span>
-          </div>
+      {/* IMAGE CAROUSEL - Desktop only */}
+      {!isMobile && (
+        <div className="relative flex flex-col items-center justify-center w-full max-w-6xl mb-8">
+          <div className="relative flex items-center justify-center w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] overflow-visible group">
+            {/* LEFT hover zone */}
+            <div
+              className="absolute left-0 top-0 h-full w-[15%] bg-gradient-to-r from-black/25 to-transparent 
+                         opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+                         flex items-center justify-start pl-3 cursor-pointer rounded-l-xl z-30"
+              onClick={prevImage}
+            >
+              <span className="text-5xl text-white drop-shadow-lg">
+                &#9664;
+              </span>
+            </div>
 
-          {/* RIGHT hover zone */}
-          <div
-            className="absolute right-0 top-0 h-full w-[15%] bg-gradient-to-l from-black/25 to-transparent 
-                       opacity-0 group-hover:opacity-100 transition-opacity duration-300 
-                       flex items-center justify-end pr-3 cursor-pointer rounded-r-xl z-30"
-            onClick={nextImage}
-          >
-            <span className="text-5xl text-white drop-shadow-lg">&#9654;</span>
-          </div>
+            {/* RIGHT hover zone */}
+            <div
+              className="absolute right-0 top-0 h-full w-[15%] bg-gradient-to-l from-black/25 to-transparent 
+                         opacity-0 group-hover:opacity-100 transition-opacity duration-300 
+                         flex items-center justify-end pr-3 cursor-pointer rounded-r-xl z-30"
+              onClick={nextImage}
+            >
+              <span className="text-5xl text-white drop-shadow-lg">
+                &#9654;
+              </span>
+            </div>
 
-          {/* Images */}
-          <div className="relative flex items-center justify-center w-full h-full">
-            {project.images.map((img, idx) => (
-              <div
+            {/* Images */}
+            <div className="relative flex items-center justify-center w-full h-full">
+              {project.images.map((img, idx) => (
+                <div
+                  key={idx}
+                  ref={(el) => {
+                    if (el) imageRefs.current[idx] = el;
+                  }}
+                  className="absolute carousel-image w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] object-cover rounded-xl shadow-2xl"
+                >
+                  <img
+                    src={img}
+                    alt={`${project.title} ${idx}`}
+                    className="w-full h-full object-cover rounded-xl shadow-2xl"
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Mobile: Single image display */}
+      {isMobile && (
+        <div className="relative w-full max-w-md  px-3">
+          <div className="relative w-full aspect-video rounded-lg overflow-hidden shadow-xl">
+            <img
+              src={project.images[currentImage]}
+              alt={`${project.title} ${currentImage}`}
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Mobile image navigation dots */}
+          <div className="flex justify-center gap-2 mt-3">
+            {project.images.map((_, idx) => (
+              <button
                 key={idx}
-                ref={(el) => {
-                  if (el) imageRefs.current[idx] = el;
-                }}
-                className="absolute carousel-image w-[700px] sm:w-[800px] h-[40vh] sm:h-[45vh] object-cover rounded-xl shadow-2xl"
-              >
-                <img
-                  src={img}
-                  alt={`${project.title} ${idx}`}
-                  className="w-full h-full object-cover rounded-xl shadow-2xl"
-                />
-              </div>
+                onClick={() => setCurrentImage(idx)}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  idx === currentImage ? "bg-accent w-6" : "bg-accent/30"
+                }`}
+                aria-label={`View image ${idx + 1}`}
+              />
             ))}
           </div>
         </div>
-      </div>
+      )}
 
       {/* PROJECT SWITCH BUTTONS */}
-      <div className="flex justify-center gap-4 sm:gap-6 mt-4">
+      <div className="flex justify-center gap-3 sm:gap-4 md:gap-6 mt-4 mb-4 sm:mb-0">
         <button
           onClick={prevProject}
           className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-bg/50 text-accent font-semibold 
-               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300"
+               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
         >
           Prev Project
         </button>
         <button
           onClick={nextProject}
           className="px-4 py-2 sm:px-6 sm:py-3 rounded-full bg-bg/50 text-accent font-semibold 
-               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300"
+               hover:bg-accent hover:text-bg transform hover:scale-105 transition-all duration-300 text-sm sm:text-base"
         >
           Next Project
         </button>
       </div>
 
       {/* TITLE + DESCRIPTION */}
-      <div className="relative w-full max-w-5xl flex flex-col items-center justify-center text-center mt-2">
+      <div className="relative w-full max-w-5xl flex flex-col items-center justify-center text-center mt-2 px-3">
         <div
           className="cursor-pointer"
           onClick={() => window.open(project.link, "_blank")}
         >
           <h3
             ref={titleRef}
-            className="project-title text-4xl sm:text-5xl font-bold text-accent mb-2"
+            className="project-title text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-accent mb-2"
           >
             {project.title}
           </h3>
           <p
             ref={descRef}
-            className="project-desc text-fg/90 text-lg sm:text-xl"
+            className="project-desc text-fg/90 text-sm sm:text-base md:text-lg lg:text-xl"
           >
             {project.description}
           </p>

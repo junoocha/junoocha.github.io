@@ -12,7 +12,7 @@ export default function MainPage() {
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    const checkMobile = () => setIsMobile(window.innerWidth < 1024); // Changed to 1024 (lg breakpoint)
     checkMobile();
     window.addEventListener("resize", checkMobile);
     return () => window.removeEventListener("resize", checkMobile);
@@ -35,8 +35,10 @@ export default function MainPage() {
 
   return (
     <main
-      className={`h-screen w-screen flex flex-col scroll-smooth bg-bg text-fg ${
-        isMobile ? "overflow-y-auto" : "overflow-y-scroll snap-y snap-mandatory"
+      className={`w-screen flex flex-col scroll-smooth bg-bg text-fg ${
+        isMobile
+          ? "overflow-y-auto"
+          : "h-screen overflow-y-scroll snap-y snap-mandatory"
       }`}
     >
       {!isMobile && <TechParticles />}
@@ -47,13 +49,25 @@ export default function MainPage() {
           welcomeDone ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <section className="h-screen flex items-center justify-center snap-center">
+        <section
+          className={`flex items-center justify-center ${
+            isMobile ? "min-h-screen" : "h-screen snap-center"
+          }`}
+        >
           <WhoAmI />
         </section>
-        <section className="h-screen flex items-center justify-center snap-center">
+        <section
+          className={`flex items-center justify-center ${
+            isMobile ? "min-h-screen" : "h-screen snap-center"
+          }`}
+        >
           <ProfessionalExperience />
         </section>
-        <section className="h-screen flex items-center justify-center snap-center">
+        <section
+          className={`flex items-center justify-center ${
+            isMobile ? "min-h-screen" : "h-screen snap-center"
+          }`}
+        >
           <PersonalProjects />
         </section>
       </div>
