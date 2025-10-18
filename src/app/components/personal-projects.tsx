@@ -14,7 +14,7 @@ const projects: Project[] = [
   {
     title: "WormScans",
     description:
-      "Manga/Manhwa Reader Platform | Next.js, React, Supabase, TypeScript.",
+      "Manga/Manhwa Reader/Scraper Platform | Next.js, React, Supabase, TypeScript.",
     images: [
       "/projects/worm1.png",
       "/projects/worm2.jpg",
