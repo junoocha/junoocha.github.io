@@ -94,7 +94,8 @@ export default function WhoAmI() {
       >
         I’m Caleb! A recent Computer Science grad from Western who’s worked on a
         variety of full-stack projects. I enjoy building things that work (most
-        of the time), look good, and occasionally even impress my cats.
+        of the time), spark a litte joy and creativity, and occasionally even
+        impress my cats.
         <br />
         <br />
         When I’m not coding, you’ll find me reading web novels or manga, gaming
