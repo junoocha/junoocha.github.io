@@ -52,7 +52,7 @@ export default function WhoAmI() {
     // Create timeline animation
     const tl = createTimeline({
       loop: false,
-      defaults: { easing: "inOut(3)", duration: 200 },
+      defaults: { easing: "inOut(3)", duration: 150 },
     });
 
     // Animate INTO place
@@ -63,7 +63,7 @@ export default function WhoAmI() {
         translateY: ["100%", "0%"], // move up/down into view
         opacity: [0, 1],
       },
-      stagger(125)
+      stagger(35)
     ).add(
       chars,
       {
@@ -92,9 +92,14 @@ export default function WhoAmI() {
         ref={textRef}
         className="text-lg sm:text-xl text-fg/90 max-w-2xl leading-relaxed mb-8"
       >
-        I’m Caleb — a full-stack developer who loves clean code, neat visuals,
-        and a hint of whimsy. I build things that feel good to use and look even
-        better.
+        I’m Caleb! A recent Computer Science grad from Western who’s worked on a
+        variety of full-stack projects. I enjoy building things that work (most
+        of the time), look good, and occasionally even impress my cat.
+        <br />
+        <br />
+        When I’m not coding, you’ll find me reading web novels or manga, gaming
+        far too late into the night, playing volleyball, or trying to convince
+        my two cats that I’m the boss. (Spoiler: I’m not.)
       </p>
 
       <div className="flex flex-wrap justify-center gap-5">
