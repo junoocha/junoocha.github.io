@@ -7,9 +7,6 @@
     "build": "next build --turbopack",
     "start": "next start"
   },
-  "engines": {
-    "node": "20.x"
-  },
   "dependencies": {
     "animejs": "^4.2.2",
     "next": "15.5.5",
