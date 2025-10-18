@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import WelcomeScreen from "./components/welcome-screen";
 import WhoAmI from "./components/who-am-i";
 import ProfessionalExperience from "./components/professional-experience";
@@ -18,8 +18,27 @@ export default function MainPage() {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // lock scroll during welcome screen
+  useEffect(() => {
+    if (!welcomeDone) {
+      document.body.style.overflow = "hidden";
+      document.body.style.touchAction = "none";
+    } else {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+      document.body.style.touchAction = "auto";
+    };
+  }, [welcomeDone]);
+
   return (
-    <main className="h-screen w-screen flex flex-col overflow-y-scroll snap-y snap-mandatory scroll-smooth bg-bg text-fg">
+    <main
+      className={`h-screen w-screen flex flex-col scroll-smooth bg-bg text-fg ${
+        isMobile ? "overflow-y-auto" : "overflow-y-scroll snap-y snap-mandatory"
+      }`}
+    >
       {!isMobile && <TechParticles />}
       {!welcomeDone && <WelcomeScreen onFinish={() => setWelcomeDone(true)} />}
 
@@ -31,16 +50,12 @@ export default function MainPage() {
         <section className="h-screen flex items-center justify-center snap-center">
           <WhoAmI />
         </section>
-
         <section className="h-screen flex items-center justify-center snap-center">
           <ProfessionalExperience />
         </section>
-
         <section className="h-screen flex items-center justify-center snap-center">
           <PersonalProjects />
         </section>
-
-        {/* Add more sections here */}
       </div>
     </main>
   );
